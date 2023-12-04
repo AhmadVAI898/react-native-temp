@@ -22,20 +22,20 @@ import splash from "../../assets/splash.png";
 
 const Login = ({ onLayoutRootView, navigation }) => {
   // Form
-  const { control, handleSubmit, formState } = useForm({
+  const { control, formState } = useForm({
     //  make useFrom triggering the validation on change and submit events
     mode: "onChange",
   });
   const { isValid } = formState;
-
+  // Functions
   const handleLogin = () => {
     // Perform login logic here
     navigation.navigate("HomeTab");
   };
 
   return (
-    // KeyboardAvoidingView is used to avoid the keyboard to cover the input fields
     <KeyboardAvoidingView
+      // KeyboardAvoidingView is used to avoid the keyboard to cover the input fields
       behavior="padding"
       style={styles.containerKeyboardAvoidingView}
     >

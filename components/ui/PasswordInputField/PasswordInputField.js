@@ -14,6 +14,7 @@ import { Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
 
 const PasswordInputField = ({ control, name, rules = {}, placeholder }) => {
+  // States
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
