@@ -1,11 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 
+// Core Components
+import { StyleSheet } from "react-native";
+
+// Advanced Components
+import NotificationButton from "./components/advanced/NotificationButton/NotificationButton";
+
 // Screens
 import FirstStep from "./screens/firstStep/firstStep";
 import HomePage from "./screens/homePage/homePage";
 import News from "./screens/news/news";
 import QrCodeReader from "./screens/qrCodeReader/qrCodeReader";
-import Login from "./screens/login/login";
+// import Login from "./screens/login/login";
 import Profile from "./screens/profile/profile";
 
 // Libraries
@@ -13,7 +19,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { Ionicons } from "@expo/vector-icons";
 import { ApiProvider } from "@hybris-software/use-query";
 import { generateApiClient } from "./Api/client";
-import ToastManager from "toastify-react-native";
 
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -86,44 +91,49 @@ export default function App() {
 
   const TabNavigator = () => {
     return (
-      <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen
-          name="Home"
-          component={HomePage}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="News"
-          component={News}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="newspaper" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Qr Reader"
-          component={QrCodeReader}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="qr-code" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person-outline" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
+      <>
+        <NotificationButton />
+        <Tab.Navigator screenOptions={screenOptions}>
+          <Tab.Screen
+            name="Home"
+            component={HomePage}
+            options={{
+              tabBarIcon: ({ color, size }) => {
+                console.log(color, size);
+
+                return <Ionicons name="home" color={color} size={size} />;
+              },
+            }}
+          />
+          <Tab.Screen
+            name="News"
+            component={News}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="newspaper" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Qr Reader"
+            component={QrCodeReader}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="qr-code" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Profile"
+            component={Profile}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="person-outline" color={color} size={size} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </>
     );
   };
 
@@ -139,11 +149,11 @@ export default function App() {
               <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
             )}
           </Stack.Screen>
-          <Stack.Screen name="Login" options={screenOptions}>
+          {/* <Stack.Screen name="Login" options={screenOptions}>
             {(props) => (
               <Login {...props} onLayoutRootView={onLayoutRootView} />
             )}
-          </Stack.Screen>
+          </Stack.Screen> */}
           <Stack.Screen name="HomeTab" options={screenOptions}>
             {(props) => (
               <TabNavigator {...props} onLayoutRootView={onLayoutRootView} />
@@ -154,3 +164,11 @@ export default function App() {
     </ApiProvider>
   );
 }
+const styles = StyleSheet.create({
+  notificationIcon: {
+    position: "absolute",
+    top: 60,
+    right: 30,
+    zIndex: 1,
+  },
+});

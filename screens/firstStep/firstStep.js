@@ -40,7 +40,8 @@ const FirstStep = ({ onLayoutRootView, navigation }) => {
         onButtonPress={tabs[index].onButtonPress}
         index={index}
         setIndex={setIndex}
-        nextScreen={"Login"}
+        // nextScreen={"Login"}
+        nextScreen={"HomeTab"}
         tabsNumber={tabs.length}
         navigation={navigation}
       />
