@@ -1,20 +1,27 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-// Libraries
-import * as SplashScreen from "expo-splash-screen";
-import { Ionicons } from "@expo/vector-icons";
-
-// Navigation
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 // Screens
 import FirstStep from "./screens/firstStep/firstStep";
 import HomePage from "./screens/homePage/homePage";
 import News from "./screens/news/news";
 import QrCodeReader from "./screens/qrCodeReader/qrCodeReader";
 import Login from "./screens/login/login";
+import Profile from "./screens/profile/profile";
+
+// Libraries
+import * as SplashScreen from "expo-splash-screen";
+import { Ionicons } from "@expo/vector-icons";
+import { ApiProvider } from "@hybris-software/use-query";
+import { generateApiClient } from "./Api/client";
+import ToastManager from "toastify-react-native";
+
+// Navigation
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+// Data
+import config from "./data/config";
 
 // Initialize the Navigation Stack
 const Stack = createNativeStackNavigator();
@@ -24,6 +31,11 @@ const Tab = createBottomTabNavigator();
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const apiClient = generateApiClient({
+    baseUrl: config.API_BASE_URL,
+    authorizationHeader: "Authorization",
+    authorizationPrefix: "Token ",
+  });
   // State to indicate if the app is ready or not
   const [appIsReady, setAppIsReady] = useState(false);
   const [isFirstLogin, setIsFirstLogin] = useState(false);
@@ -102,30 +114,43 @@ export default function App() {
             ),
           }}
         />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person-outline" color={color} size={size} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     );
   };
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={isFirstLogin ? "Welcome" : "HomeTab"}
-        screenOptions={screenOptions}
-      >
-        <Stack.Screen name="Welcome" options={screenOptions}>
-          {(props) => (
-            <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
-          )}
-        </Stack.Screen>
-        <Stack.Screen name="Login" options={screenOptions}>
-          {(props) => <Login {...props} onLayoutRootView={onLayoutRootView} />}
-        </Stack.Screen>
-        <Stack.Screen name="HomeTab" options={screenOptions}>
-          {(props) => (
-            <TabNavigator {...props} onLayoutRootView={onLayoutRootView} />
-          )}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ApiProvider apiClient={apiClient}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName={isFirstLogin ? "Welcome" : "HomeTab"}
+          screenOptions={screenOptions}
+        >
+          <Stack.Screen name="Welcome" options={screenOptions}>
+            {(props) => (
+              <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="Login" options={screenOptions}>
+            {(props) => (
+              <Login {...props} onLayoutRootView={onLayoutRootView} />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="HomeTab" options={screenOptions}>
+            {(props) => (
+              <TabNavigator {...props} onLayoutRootView={onLayoutRootView} />
+            )}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ApiProvider>
   );
 }

@@ -1,44 +1,52 @@
 import React from "react";
 
-// Libraries
-import { Controller } from "react-hook-form";
-
 // Core Components
 import { View, Text, TextInput, StyleSheet } from "react-native";
 
 const InputField = ({
-  control,
-  name,
-  rules = {},
   placeholder,
-  secureTextEntry,
+  value,
+  showError = true,
+  errorDetails,
+  isValid,
+  label,
+  setValue = () => {},
+  onChange = () => {},
+  onBlur = () => {},
+  setShowErrors = () => {},
 }) => {
+  const errorMessageString =
+    errorDetails == null
+      ? null
+      : typeof errorDetails === "object"
+      ? errorDetails.message
+      : errorDetails;
+
   return (
-    <Controller
-      control={control}
-      name={name}
-      rules={rules}
-      render={({
-        field: { value, onChange, onBlur },
-        fieldState: { error },
-      }) => (
-        <View style={[styles.container]}>
-          <View style={[styles.componentWrapper]}>
-            <TextInput
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              placeholder={placeholder}
-              style={[styles.input, { borderColor: error ? "red" : "#e8e8e8" }]}
-              secureTextEntry={secureTextEntry}
-            />
-          </View>
-          <Text style={[styles.textError]}>
-            {error && <>{error.message || "Error"} </>}
-          </Text>
-        </View>
+    <View style={[styles.container]}>
+      {label && <Text style={[styles.computedLabel]}>{label}</Text>}
+      <View style={[styles.componentWrapper]}>
+        <TextInput
+          placeholder={placeholder}
+          value={value}
+          onChangeText={(text) => {
+            setValue(text);
+            onChange(text);
+          }}
+          onBlur={(e) => {
+            setShowErrors();
+            onBlur(e);
+          }}
+          style={[styles.input, { borderColor: isValid ? "red" : "#e8e8e8" }]}
+          textContentType={"none"}
+        />
+      </View>
+      {showError && (
+        <Text style={[styles.textError]}>
+          {errorMessageString && errorMessageString}
+        </Text>
       )}
-    />
+    </View>
   );
 };
 
@@ -58,6 +66,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 50,
     paddingVertical: 25,
+    marginBottom: 5,
+  },
+  computedLabel: {
+    fontSize: 14,
+    color: "#666",
     marginBottom: 5,
   },
   input: {

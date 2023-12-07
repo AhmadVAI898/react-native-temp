@@ -1,36 +1,65 @@
-import React, { useState } from "react";
-
-// Libraries
-import { useForm } from "react-hook-form";
-
 // Core Components
-import {
-  View,
-  Image,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, Image, StyleSheet, KeyboardAvoidingView } from "react-native";
 
 // UI Components
 import InputField from "../../components/ui/InputField/InputField";
 import Button from "../../components/ui/Button/Button";
 import PasswordInputField from "../../components/ui/PasswordInputField/PasswordInputField";
 
+// Libraries
+import ToastManager, { Toast } from "toastify-react-native";
+import useQuery from "@hybris-software/use-query";
+import useForm from "@hybris-software/use-ful-form";
+import * as SecureStore from "expo-secure-store";
+import { useNavigation } from "@react-navigation/native";
+
 // Images
 import splash from "../../assets/splash.png";
 
-const Login = ({ onLayoutRootView, navigation }) => {
+// Data
+import endPoints from "../../data/endPoints";
+
+const Login = ({ onLayoutRootView }) => {
+  // Hooks
+  const navigation = useNavigation();
   // Form
-  const { control, formState } = useForm({
-    //  make useFrom triggering the validation on change and submit events
-    mode: "onChange",
+  const form = useForm({
+    inputs: {
+      username: {
+        validator: (value) => {
+          if (!value || value === "") return [false, "This field is required"];
+          return [true, ""];
+        },
+      },
+      password: {
+        validator: (value) => {
+          if (!value || value === "") return [false, "This field is required"];
+          return [true, ""];
+        },
+      },
+    },
   });
-  const { isValid } = formState;
+
+  // Queries
+  const loginApi = useQuery({
+    url: endPoints.auth.LOGIN,
+    method: "POST",
+    executeImmediately: false,
+    onSuccess: (response) => {
+      SecureStore.setItemAsync("token", response.data.token);
+      navigation.navigate("HomeTab");
+    },
+    onError: (error) => {
+      if (error?.response?.status === 422) {
+        form.fetchQueryErrors(error.response.data);
+      } else {
+        Toast.error(error.response.data.message);
+      }
+    },
+  });
   // Functions
   const handleLogin = () => {
-    // Perform login logic here
-    navigation.navigate("HomeTab");
+    loginApi.executeQuery(form.getApiBody());
   };
 
   return (
@@ -39,28 +68,27 @@ const Login = ({ onLayoutRootView, navigation }) => {
       behavior="padding"
       style={styles.containerKeyboardAvoidingView}
     >
+      <ToastManager textStyle={{ fontSize: 12 }} />
+
       <View style={styles.container} onLayout={onLayoutRootView}>
         <Image source={splash} style={{ width: 200, height: 200 }} />
         <InputField
-          name="username"
           placeholder="Username"
-          control={control}
-          rules={{ required: "Username is required" }}
+          label="Username"
+          {...form.getInputProps("username")}
         />
         <PasswordInputField
-          control={control}
-          name="password"
-          rules={{
-            required: "Password is required",
-            minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters long",
-            },
-          }}
           placeholder="Password"
+          label="Password"
+          {...form.getInputProps("password")}
         />
 
-        <Button text="Sign In" onPress={handleLogin} disabled={!isValid} />
+        <Button
+          text="Sign In"
+          onPress={handleLogin}
+          disabled={!form.isValid()}
+          isLoading={loginApi.isLoading}
+        />
       </View>
     </KeyboardAvoidingView>
   );

@@ -46,12 +46,13 @@ const styles = StyleSheet.create({
 
   container_SECONDARY: {
     borderColor: "#3B77",
+    backgroundColor: "#4444",
+
     borderWidth: 2,
   },
   containerDisabled: {
     opacity: 0.7,
   },
-  container_TERTIARY: {},
 
   text: {
     fontWeight: "bold",
@@ -60,10 +61,6 @@ const styles = StyleSheet.create({
 
   text_SECONDARY: {
     color: "white",
-  },
-
-  text_TERTIARY: {
-    color: "gray",
   },
 });
 

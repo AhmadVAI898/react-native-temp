@@ -9,51 +9,70 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-// Libraries
-import { Controller } from "react-hook-form";
+// Icons
 import { Ionicons } from "@expo/vector-icons";
 
-const PasswordInputField = ({ control, name, rules = {}, placeholder }) => {
+const PasswordInputField = ({
+  placeholder,
+  value,
+  showError = true,
+  errorDetails,
+  isValid,
+  label,
+  setValue = () => {},
+  onChange = () => {},
+  onBlur = () => {},
+  setShowErrors = () => {},
+}) => {
   // States
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  // Consts
+  const errorMessageString =
+    errorDetails == null
+      ? null
+      : typeof errorDetails === "object"
+      ? errorDetails.message
+      : errorDetails;
+
   return (
-    <Controller
-      control={control}
-      name={name}
-      rules={rules}
-      render={({
-        field: { value, onChange, onBlur },
-        fieldState: { error },
-      }) => (
-        <View style={[styles.container]}>
-          <View style={[styles.componentWrapper]}>
-            <TextInput
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              placeholder={placeholder}
-              style={styles.input}
-              secureTextEntry={!isPasswordVisible}
-            />
-            <TouchableOpacity
-              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-              style={styles.iconContainer}
-            >
-              <Ionicons
-                name={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
-                size={25}
-                style={styles.iconSvg}
-                color="#666"
-              />
-            </TouchableOpacity>
-          </View>
-          <Text style={[styles.textError]}>
-            {error && <>{error.message || "Error"} </>}
-          </Text>
-        </View>
+    <View style={[styles.container]}>
+      {label && <Text style={[styles.computedLabel]}>{label}</Text>}
+      <View style={[styles.componentWrapper]}>
+        <TextInput
+          placeholder={placeholder}
+          autoCorrect={false}
+          value={value}
+          onChangeText={(text) => {
+            setValue(text);
+            onChange(text);
+          }}
+          onBlur={(e) => {
+            setShowErrors();
+            onBlur(e);
+          }}
+          style={[styles.input, { borderColor: isValid ? "red" : "#e8e8e8" }]}
+          secureTextEntry={!isPasswordVisible}
+          textContentType={"none"}
+        />
+        <TouchableOpacity
+          onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+          style={styles.iconContainer}
+        >
+          <Ionicons
+            name={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
+            size={25}
+            style={styles.iconSvg}
+            color="#666"
+          />
+        </TouchableOpacity>
+      </View>
+      {showError && (
+        <Text style={[styles.textError]}>
+          {errorMessageString && errorMessageString}
+        </Text>
       )}
-    />
+    </View>
   );
 };
 
@@ -73,6 +92,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 50,
     paddingVertical: 25,
+    marginBottom: 5,
+  },
+  computedLabel: {
+    fontSize: 14,
+    color: "#666",
     marginBottom: 5,
   },
   input: {
