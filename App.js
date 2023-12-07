@@ -11,7 +11,7 @@ import FirstStep from "./screens/firstStep/firstStep";
 import HomePage from "./screens/homePage/homePage";
 import News from "./screens/news/news";
 import QrCodeReader from "./screens/qrCodeReader/qrCodeReader";
-// import Login from "./screens/login/login";
+import Login from "./screens/login/login";
 import Profile from "./screens/profile/profile";
 
 // Libraries
@@ -149,11 +149,11 @@ export default function App() {
               <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
             )}
           </Stack.Screen>
-          {/* <Stack.Screen name="Login" options={screenOptions}>
+          <Stack.Screen name="Login" options={screenOptions}>
             {(props) => (
               <Login {...props} onLayoutRootView={onLayoutRootView} />
             )}
-          </Stack.Screen> */}
+          </Stack.Screen>
           <Stack.Screen name="HomeTab" options={screenOptions}>
             {(props) => (
               <TabNavigator {...props} onLayoutRootView={onLayoutRootView} />
