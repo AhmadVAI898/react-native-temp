@@ -1,78 +1,61 @@
-import React, { useState } from "react";
+// Core components
+import { StyleSheet, Text, View, Image } from "react-native";
 
-// Core Components
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+// Assets
+import profile from "../../assets/profile.png";
 
-const Profile = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-
+export default Profile = () => {
   return (
-    <>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}></View>
-        </View>
-      </Modal>
-
-      <View style={styles.centeredView}>
-        <Pressable
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}
-        >
-          <Text style={styles.textStyle}>Show Modal</Text>
-        </Pressable>
+    <View style={styles.container}>
+      <View style={styles.header}></View>
+      <Image style={styles.avatar} source={profile} />
+      <View style={styles.body}>
+        <Text style={styles.name}>ALi Molhem</Text>
+        <Text style={styles.info}>ali.molhem@gmail.com</Text>
       </View>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
+  header: {
+    backgroundColor: "#00BFFF",
+    height: 200,
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom: 10,
+    alignSelf: "center",
+    position: "absolute",
+    marginTop: 130,
+  },
+  name: {
+    fontSize: 22,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  body: {
+    marginTop: 60,
+    alignItems: "center",
+  },
+
+  bodyContent: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    padding: 30,
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+  name: {
+    fontSize: 28,
+    color: "#696969",
+    fontWeight: "600",
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
+  info: {
+    fontSize: 16,
+    color: "#00BFFF",
+    marginTop: 10,
   },
 });
-export default Profile;
