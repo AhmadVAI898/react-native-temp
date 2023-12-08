@@ -50,13 +50,20 @@ const Login = ({ onLayoutRootView }) => {
     executeImmediately: false,
     onSuccess: (response) => {
       SecureStore.setItemAsync("token", response.data.token);
+      console.log("login", response.data.token);
       navigation.navigate("HomeTab");
     },
     onError: (error) => {
+      console.log(error);
       if (error?.response?.status === 422) {
         form.fetchQueryErrors(error.response.data);
       } else {
-        Toast.error(error.response.data.message);
+        if (error?.response?.data?.message) {
+          Toast.error(error?.response?.data?.message);
+        } else {
+          console.log(error);
+          Toast.error("Something went wrong, Please try agin later. ");
+        }
       }
     },
   });

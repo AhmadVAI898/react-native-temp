@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 // Core Components
-import { StyleSheet } from "react-native";
+import { StatusBar } from "react-native";
 
 // Advanced Components
 import NotificationButton from "./components/advanced/NotificationButton/NotificationButton";
@@ -68,6 +68,14 @@ export default function App() {
     prepare();
   }, []);
 
+  useEffect(() => {
+    // Set the status bar style to 'dark-content' for iOS
+    if (Platform.OS === "ios") {
+      StatusBar.setBarStyle("dark-content");
+    }
+    // #TODO : check the statusBar style for Android devices
+  }, []);
+
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
       // This tells the splash screen to hide immediately! If we call this after
@@ -99,8 +107,6 @@ export default function App() {
             component={HomePage}
             options={{
               tabBarIcon: ({ color, size }) => {
-                console.log(color, size);
-
                 return <Ionicons name="home" color={color} size={size} />;
               },
             }}
@@ -164,11 +170,3 @@ export default function App() {
     </ApiProvider>
   );
 }
-const styles = StyleSheet.create({
-  notificationIcon: {
-    position: "absolute",
-    top: 60,
-    right: 30,
-    zIndex: 1,
-  },
-});

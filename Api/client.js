@@ -20,13 +20,24 @@ export function generateApiClient({
   });
 
   apiClient.interceptors.request.use(
-    function (config) {
-      config.headers = config.headers || {};
-      const token = SecureStore.getItemAsync(tokenKey);
-      if (token) {
-        config.headers[authorizationHeader] = `${authorizationPrefix}${token}`;
+    async function (config) {
+      try {
+        config.headers = config.headers || {};
+        const token = await SecureStore.getItemAsync(tokenKey);
+        console.log("Client token ", token);
+
+        if (token) {
+          config.headers[
+            authorizationHeader
+          ] = `${authorizationPrefix}${token}`;
+        }
+
+        console.log("config", config.headers);
+        return config;
+      } catch (error) {
+        console.log("AAAAAAAAAAAAAAAAA", error);
+        return Promise.reject(error);
       }
-      return config;
     },
     function (error) {
       return Promise.reject(error);

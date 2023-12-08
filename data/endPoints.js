@@ -4,6 +4,9 @@ const endPoints = {
     USERINFO: "auth/user/",
     LOGOUT: "auth/logout/",
   },
+  news: {
+    NEWS: "news/",
+  },
 };
 
 export default endPoints;
