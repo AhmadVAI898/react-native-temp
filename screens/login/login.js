@@ -1,5 +1,5 @@
 // Core Components
-import { View, Image, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { View, Image, KeyboardAvoidingView } from "react-native";
 
 // UI Components
 import InputField from "../../components/ui/InputField/InputField";
@@ -18,6 +18,9 @@ import splash from "../../assets/splash.png";
 
 // Data
 import endPoints from "../../data/endPoints";
+
+// Styles
+import styles from "./styles";
 
 const Login = ({ onLayoutRootView }) => {
   // Hooks
@@ -93,17 +96,5 @@ const Login = ({ onLayoutRootView }) => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  containerKeyboardAvoidingView: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  container: {
-    alignItems: "center",
-    paddingHorizontal: 20,
-    rowGap: 10,
-  },
-});
 
 export default Login;

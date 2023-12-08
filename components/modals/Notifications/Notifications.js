@@ -1,9 +1,12 @@
 // Core components
-import { StyleSheet, View, Pressable, Text, Image } from "react-native";
+import { View, Pressable, Text, Image } from "react-native";
 
 // Assets
 import { Ionicons } from "@expo/vector-icons";
 import blank from "../../../assets/notifications-blank.jpg";
+
+// Styles
+import styles from "./styles";
 
 const Notifications = ({ modalVisible, setModalVisible }) => {
   return (
@@ -21,40 +24,5 @@ const Notifications = ({ modalVisible, setModalVisible }) => {
     </>
   );
 };
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    backgroundColor: "white",
-  },
-  imageBlank: {
-    width: "100%",
-    height: 300,
-    resizeMode: "contain",
-    marginBottom: 80,
-  },
-  textBlank: {
-    fontSize: 20,
-    color: "black",
-    textAlign: "center",
-  },
-  closeIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: "50%",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-    position: "absolute",
-    top: 60,
-    right: 30,
-    zIndex: 1,
-    shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-});
+
 export default Notifications;

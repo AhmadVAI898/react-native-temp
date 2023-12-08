@@ -3,6 +3,9 @@ import React from "react";
 // Core Components
 import { View, Text, Image, Button, StyleSheet } from "react-native";
 
+// Styles
+import styles from "./styles";
+
 const WelcomeTab = ({
   image,
   title,
@@ -36,16 +39,5 @@ const WelcomeTab = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-});
 
 export default WelcomeTab;

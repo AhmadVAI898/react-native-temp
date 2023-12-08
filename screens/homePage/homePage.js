@@ -1,10 +1,13 @@
 import React from "react";
 
 // Core Components
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 
 // Libraries
 import MapView from "react-native-maps";
+
+// Styles
+import styles from "./styles";
 
 const HomePage = () => {
   return (
@@ -18,15 +21,5 @@ const HomePage = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  map: {
-    width: "100%",
-    height: "100%",
-  },
-});
 
 export default HomePage;

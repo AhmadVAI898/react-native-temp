@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 
-// Images
-import splash from "../../assets/splash.png";
-
 // Core Components
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 
 // Advanced Components
 import WelcomeTab from "../../components/advanced/welcomeTab/welcomeTab";
+
+// Images
+import splash from "../../assets/splash.png";
+
+// Styles
+import styles from "./styles";
 
 const FirstStep = ({ onLayoutRootView, navigation }) => {
   const [index, setIndex] = useState(0);
@@ -48,13 +51,5 @@ const FirstStep = ({ onLayoutRootView, navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 export default FirstStep;

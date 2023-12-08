@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 
 // Core Components
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
 // Icons
 import { Ionicons } from "@expo/vector-icons";
+
+// Styles
+import styles from "./styles";
 
 const PasswordInputField = ({
   placeholder,
@@ -41,7 +38,6 @@ const PasswordInputField = ({
       <View style={[styles.componentWrapper]}>
         <TextInput
           placeholder={placeholder}
-          autoCorrect={false}
           value={value}
           onChangeText={(text) => {
             setValue(text);
@@ -75,52 +71,5 @@ const PasswordInputField = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-    width: "100%",
-    height: "auto",
-    alignSelf: "stretch",
-  },
-  componentWrapper: {
-    position: "relative",
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 5,
-    paddingLeft: 10,
-    paddingRight: 50,
-    paddingVertical: 25,
-    marginBottom: 5,
-  },
-  computedLabel: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 5,
-  },
-  input: {
-    flex: 1,
-    width: "100%",
-  },
-
-  iconContainer: {
-    position: "absolute",
-    right: 15,
-  },
-
-  iconSvg: {
-    marginRight: 5,
-  },
-
-  textError: {
-    minHeight: 20,
-    paddingVertical: 5,
-    width: "100%",
-    fontSize: 12,
-    color: "red",
-    textAlign: "left",
-  },
-});
 
 export default PasswordInputField;

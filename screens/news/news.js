@@ -1,7 +1,10 @@
 import React from "react";
 
 // Core Components
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
+
+// Styles
+import styles from "./styles";
 
 const News = () => {
   return (
@@ -10,13 +13,5 @@ const News = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 export default News;
