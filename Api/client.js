@@ -24,7 +24,6 @@ export function generateApiClient({
       try {
         config.headers = config.headers || {};
         const token = await SecureStore.getItemAsync(tokenKey);
-        console.log("Client token ", token);
 
         if (token) {
           config.headers[
@@ -32,10 +31,8 @@ export function generateApiClient({
           ] = `${authorizationPrefix}${token}`;
         }
 
-        console.log("config", config.headers);
         return config;
       } catch (error) {
-        console.log("AAAAAAAAAAAAAAAAA", error);
         return Promise.reject(error);
       }
     },

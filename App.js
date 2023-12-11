@@ -105,6 +105,7 @@ export default function App() {
           <Tab.Screen
             name="Home"
             component={HomePage}
+            unmountOnBlur={true}
             options={{
               tabBarIcon: ({ color, size }) => {
                 return <Ionicons name="home" color={color} size={size} />;
@@ -123,15 +124,18 @@ export default function App() {
           <Tab.Screen
             name="Qr Reader"
             component={QrCodeReader}
+            unmountOnBlur={true}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="qr-code" color={color} size={size} />
               ),
+              unmountOnBlur: true, // Add the unmountOnBlur this tab to avoid keeping the camera working
             }}
           />
           <Tab.Screen
             name="Profile"
             component={Profile}
+            unmountOnBlur={true}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="person-outline" color={color} size={size} />
@@ -151,9 +155,12 @@ export default function App() {
           screenOptions={screenOptions}
         >
           <Stack.Screen name="Welcome" options={screenOptions}>
-            {(props) => (
-              <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
-            )}
+            {(props) => {
+              console.log(props);
+              return (
+                <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
+              );
+            }}
           </Stack.Screen>
           <Stack.Screen name="Login" options={screenOptions}>
             {(props) => (
