@@ -31,6 +31,14 @@ export function generateApiClient({
           ] = `${authorizationPrefix}${token}`;
         }
 
+        if (
+          config.method.toLocaleLowerCase() === "get" &&
+          typeof config.data === "object" &&
+          Object.keys(config.data).length === 0
+        ) {
+          config.data = undefined;
+        }
+
         return config;
       } catch (error) {
         return Promise.reject(error);

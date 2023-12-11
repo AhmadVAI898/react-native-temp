@@ -3,6 +3,7 @@ import { Image, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import biagio from "../../../assets/profile.png";
 import styles from "./styles";
+import moment from "moment/moment";
 
 const NewsCard = ({ post }) => {
   return (
@@ -14,8 +15,8 @@ const NewsCard = ({ post }) => {
       >
         <Text style={styles.text}>{post?.title}</Text>
         <Text style={styles.timestamp}>
-          {moment(post?.publishedAt).format("HH:MM DD, MMMM")}
-        </Text>{" "}
+          {moment(post?.publishedAt)?.format("HH:MM DD, MMMM")}
+        </Text>
       </LinearGradient>
     </TouchableOpacity>
   );

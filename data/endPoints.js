@@ -5,7 +5,7 @@ const endPoints = {
     LOGOUT: "auth/logout/",
   },
   news: {
-    NEWS: "news/",
+    GET_NEWS: (page) => `news/?page=${page}&limit=5`,
   },
 };
 
