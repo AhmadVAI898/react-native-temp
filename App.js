@@ -27,6 +27,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Data
 import config from "./data/config";
+import NewsPost from "./screens/newsPost/newsPost";
 
 // Initialize the Navigation Stack
 const Stack = createNativeStackNavigator();
@@ -119,6 +120,7 @@ export default function App() {
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="newspaper" color={color} size={size} />
               ),
+              unmountOnBlur: true, // Add the unmountOnBlur this tab to avoid keeping the camera working
             }}
           />
           <Tab.Screen
@@ -129,7 +131,7 @@ export default function App() {
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="qr-code" color={color} size={size} />
               ),
-              unmountOnBlur: true, // Add the unmountOnBlur this tab to avoid keeping the camera working
+              unmountOnBlur: true,
             }}
           />
           <Tab.Screen
@@ -155,12 +157,9 @@ export default function App() {
           screenOptions={screenOptions}
         >
           <Stack.Screen name="Welcome" options={screenOptions}>
-            {(props) => {
-              console.log(props);
-              return (
-                <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
-              );
-            }}
+            {(props) => (
+              <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
+            )}
           </Stack.Screen>
           <Stack.Screen name="Login" options={screenOptions}>
             {(props) => (
@@ -170,6 +169,11 @@ export default function App() {
           <Stack.Screen name="HomeTab" options={screenOptions}>
             {(props) => (
               <TabNavigator {...props} onLayoutRootView={onLayoutRootView} />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="NewsPost" options={screenOptions}>
+            {(props) => (
+              <NewsPost {...props} onLayoutRootView={onLayoutRootView} />
             )}
           </Stack.Screen>
         </Stack.Navigator>

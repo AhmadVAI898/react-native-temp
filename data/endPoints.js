@@ -7,6 +7,9 @@ const endPoints = {
   news: {
     GET_NEWS: (page) => `news/?page=${page}&limit=5`,
   },
+  maps: {
+    GET_MARKERS: `maps/`,
+  },
 };
 
 export default endPoints;

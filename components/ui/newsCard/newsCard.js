@@ -1,13 +1,25 @@
 import React from "react";
+
+// Core Components
 import { Image, Text, TouchableOpacity } from "react-native";
+
+// Libraries
 import { LinearGradient } from "expo-linear-gradient";
-import biagio from "../../../assets/profile.png";
-import styles from "./styles";
 import moment from "moment/moment";
 
-const NewsCard = ({ post }) => {
+// Assets
+import biagio from "../../../assets/profile.png";
+
+// Styles
+import styles from "./styles";
+
+const NewsCard = ({ post, navigation }) => {
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={styles.container}
+      onPress={() => navigation.navigate("NewsPost", { id: `${post?.id}` })}
+    >
       <Image source={biagio} resizeMode={"cover"} style={styles.image} />
       <LinearGradient
         colors={["#0000", "#000A", "#000"]}

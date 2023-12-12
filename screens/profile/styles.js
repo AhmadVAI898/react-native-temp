@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   },
   body: {
     marginTop: 60,
+    marginBottom: 40,
     alignItems: "center",
   },
 
@@ -41,5 +42,41 @@ const styles = StyleSheet.create({
     color: "#00BFFF",
     marginTop: 10,
   },
+  wrapper: {
+    flex: 0,
+    width: "100%",
+    height: "auto",
+    alignSelf: "stretch",
+    paddingHorizontal: 20,
+  },
+  computedLabel: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 5,
+  },
 });
-export default styles;
+const pickerStyle = {
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+};
+export { styles, pickerStyle };
