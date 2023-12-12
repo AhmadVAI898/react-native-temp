@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
 
 // Core Components
 import { View, Text } from "react-native";
@@ -16,9 +16,6 @@ import { DEFAULT_MAP_COORDINATES } from "../../data/constants";
 import styles from "./styles";
 
 const HomePage = () => {
-  // Refs
-  const mapRef = useRef();
-
   // Queries
   const getNewAPI = useQuery({
     url: endPoints.maps.GET_MARKERS,
@@ -29,6 +26,7 @@ const HomePage = () => {
     },
   });
 
+  // Functions
   const IconBasedOnCategory = (category) => {
     switch (category) {
       case "HOTEL":
@@ -43,7 +41,7 @@ const HomePage = () => {
         return <Ionicons name="location-sharp" size={40} color="#100684" />;
     }
   };
-  // Extracting the first location's coordinates
+
   const firstLocation = getNewAPI?.response?.data?.results?.[0];
   const initialRegion = firstLocation
     ? {
@@ -53,6 +51,7 @@ const HomePage = () => {
         longitudeDelta: 0.0421,
       }
     : DEFAULT_MAP_COORDINATES;
+
   return (
     <View style={styles.container}>
       {getNewAPI.isError ? (
@@ -62,7 +61,6 @@ const HomePage = () => {
       ) : (
         // Display the map with markers
         <MapView
-          ref={mapRef}
           style={styles.map}
           provider="google"
           showsUserLocation={true}

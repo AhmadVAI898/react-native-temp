@@ -4,4 +4,5 @@ const DEFAULT_MAP_COORDINATES = {
   latitudeDelta: 70.4,
   longitudeDelta: 120.5,
 };
+
 export { DEFAULT_MAP_COORDINATES };
