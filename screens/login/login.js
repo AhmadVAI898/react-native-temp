@@ -1,5 +1,11 @@
 // Core Components
-import { View, Image, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from "react-native";
 
 // UI Components
 import InputField from "../../components/ui/InputField/InputField";
@@ -12,6 +18,7 @@ import useQuery from "@hybris-software/use-query";
 import useForm from "@hybris-software/use-ful-form";
 import * as SecureStore from "expo-secure-store";
 import { useNavigation } from "@react-navigation/native";
+import AuthRoute from "../../vendors/Components/AuthRoute";
 
 // Images
 import splash from "../../assets/splash.png";
@@ -50,7 +57,6 @@ const Login = ({ onLayoutRootView }) => {
     executeImmediately: false,
     onSuccess: (response) => {
       SecureStore.setItemAsync("token", response.data.token);
-      console.log("login", response.data.token);
       navigation.navigate("HomeTab");
     },
     onError: (error) => {
@@ -73,34 +79,47 @@ const Login = ({ onLayoutRootView }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      // KeyboardAvoidingView is used to avoid the keyboard to cover the input fields
-      behavior="padding"
-      style={styles.containerKeyboardAvoidingView}
+    <AuthRoute
+      minimumLoadingTime={100}
+      loader={
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#aaa" />
+        </View>
+      }
+      forLoggedUser={false}
+      action={() => {
+        navigation.navigate("HomeTab");
+      }}
     >
-      <ToastManager textStyle={{ fontSize: 12 }} />
+      <KeyboardAvoidingView
+        // KeyboardAvoidingView is used to avoid the keyboard to cover the input fields
+        behavior="padding"
+        style={styles.containerKeyboardAvoidingView}
+      >
+        <ToastManager textStyle={{ fontSize: 12 }} />
 
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <Image source={splash} style={{ width: 200, height: 200 }} />
-        <InputField
-          placeholder="Username"
-          label="Username"
-          {...form.getInputProps("username")}
-        />
-        <PasswordInputField
-          placeholder="Password"
-          label="Password"
-          {...form.getInputProps("password")}
-        />
+        <View style={styles.container} onLayout={onLayoutRootView}>
+          <Image source={splash} style={{ width: 200, height: 200 }} />
+          <InputField
+            placeholder="Username"
+            label="Username"
+            {...form.getInputProps("username")}
+          />
+          <PasswordInputField
+            placeholder="Password"
+            label="Password"
+            {...form.getInputProps("password")}
+          />
 
-        <Button
-          text="Sign In"
-          onPress={handleLogin}
-          disabled={!form.isValid()}
-          isLoading={loginApi.isLoading}
-        />
-      </View>
-    </KeyboardAvoidingView>
+          <Button
+            text="Sign In"
+            onPress={handleLogin}
+            disabled={!form.isValid()}
+            isLoading={loginApi.isLoading}
+          />
+        </View>
+      </KeyboardAvoidingView>
+    </AuthRoute>
   );
 };
 

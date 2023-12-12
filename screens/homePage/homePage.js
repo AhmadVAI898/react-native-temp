@@ -1,12 +1,13 @@
 import React from "react";
 
 // Core Components
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 
 // Libraries
 import MapView, { Marker } from "react-native-maps";
 import useQuery from "@hybris-software/use-query";
 import { Ionicons } from "@expo/vector-icons";
+import AuthRoute from "../../vendors/Components/AuthRoute";
 
 // Data
 import endPoints from "../../data/endPoints";
@@ -15,7 +16,7 @@ import { DEFAULT_MAP_COORDINATES } from "../../data/constants";
 // Styles
 import styles from "./styles";
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
   // Queries
   const getNewAPI = useQuery({
     url: endPoints.maps.GET_MARKERS,
@@ -53,38 +54,51 @@ const HomePage = () => {
     : DEFAULT_MAP_COORDINATES;
 
   return (
-    <View style={styles.container}>
-      {getNewAPI.isError ? (
-        <Text>Error</Text>
-      ) : getNewAPI?.isLoading ? (
-        <Text>Loading</Text>
-      ) : (
-        // Display the map with markers
-        <MapView
-          style={styles.map}
-          provider="google"
-          showsUserLocation={true}
-          followsUserLocation={true}
-          initialRegion={initialRegion}
-        >
-          {getNewAPI?.response?.data?.results?.map((location) => {
-            return (
-              <Marker
-                key={location?.id}
-                coordinate={{
-                  latitude: parseFloat(location?.latitude),
-                  longitude: parseFloat(location?.longitude),
-                }}
-                title={location?.name}
-                description={location?.description}
-              >
-                {IconBasedOnCategory(location?.category)}
-              </Marker>
-            );
-          })}
-        </MapView>
-      )}
-    </View>
+    <AuthRoute
+      minimumLoadingTime={100}
+      loader={
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#aaa" />
+        </View>
+      }
+      forLoggedUser={true}
+      action={() => {
+        navigation.navigate("Login");
+      }}
+    >
+      <View style={styles.container}>
+        {getNewAPI.isError ? (
+          <Text>Error</Text>
+        ) : getNewAPI?.isLoading ? (
+          <Text>Loading</Text>
+        ) : (
+          // Display the map with markers
+          <MapView
+            style={styles.map}
+            provider="google"
+            showsUserLocation={true}
+            followsUserLocation={true}
+            initialRegion={initialRegion}
+          >
+            {getNewAPI?.response?.data?.results?.map((location) => {
+              return (
+                <Marker
+                  key={location?.id}
+                  coordinate={{
+                    latitude: parseFloat(location?.latitude),
+                    longitude: parseFloat(location?.longitude),
+                  }}
+                  title={location?.name}
+                  description={location?.description}
+                >
+                  {IconBasedOnCategory(location?.category)}
+                </Marker>
+              );
+            })}
+          </MapView>
+        )}
+      </View>
+    </AuthRoute>
   );
 };
 

@@ -19,6 +19,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { Ionicons } from "@expo/vector-icons";
 import { ApiProvider } from "@hybris-software/use-query";
 import { generateApiClient } from "./Api/client";
+import AuthProvider from "./vendors/Components/AuthProvider";
 
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -151,33 +152,35 @@ export default function App() {
 
   return (
     <ApiProvider apiClient={apiClient}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={isFirstLogin ? "Welcome" : "HomeTab"}
-          screenOptions={screenOptions}
-        >
-          <Stack.Screen name="Welcome" options={screenOptions}>
-            {(props) => (
-              <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
-            )}
-          </Stack.Screen>
-          <Stack.Screen name="Login" options={screenOptions}>
-            {(props) => (
-              <Login {...props} onLayoutRootView={onLayoutRootView} />
-            )}
-          </Stack.Screen>
-          <Stack.Screen name="HomeTab" options={screenOptions}>
-            {(props) => (
-              <TabNavigator {...props} onLayoutRootView={onLayoutRootView} />
-            )}
-          </Stack.Screen>
-          <Stack.Screen name="NewsPost" options={screenOptions}>
-            {(props) => (
-              <NewsPost {...props} onLayoutRootView={onLayoutRootView} />
-            )}
-          </Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
+      <AuthProvider apiClient={apiClient} authUrl="auth/user/">
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={isFirstLogin ? "Welcome" : "HomeTab"}
+            screenOptions={screenOptions}
+          >
+            <Stack.Screen name="Welcome" options={screenOptions}>
+              {(props) => (
+                <FirstStep {...props} onLayoutRootView={onLayoutRootView} />
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="Login" options={screenOptions}>
+              {(props) => (
+                <Login {...props} onLayoutRootView={onLayoutRootView} />
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="HomeTab" options={screenOptions}>
+              {(props) => (
+                <TabNavigator {...props} onLayoutRootView={onLayoutRootView} />
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="NewsPost" options={screenOptions}>
+              {(props) => (
+                <NewsPost {...props} onLayoutRootView={onLayoutRootView} />
+              )}
+            </Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthProvider>
     </ApiProvider>
   );
 }
