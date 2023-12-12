@@ -17,6 +17,7 @@ const InputField = ({
   onChange = () => {},
   onBlur = () => {},
   setShowErrors = () => {},
+  readOnly = false,
 }) => {
   const errorMessageString =
     errorDetails == null
@@ -42,6 +43,7 @@ const InputField = ({
           }}
           style={[styles.input, { borderColor: isValid ? "red" : "#e8e8e8" }]}
           textContentType={"none"}
+          editable={!readOnly}
         />
       </View>
       {showError && (

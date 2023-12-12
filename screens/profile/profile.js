@@ -20,13 +20,14 @@ const Profile = () => {
       <Image style={styles.avatar} source={profile} />
       <View style={styles.body}>
         <Text style={styles.name}>ALi Molhem</Text>
-        <Text style={styles.info}>@ali.molhe</Text>
+        <Text style={styles.info}>@ali.molhem</Text>
       </View>
       <View style={[styles.wrapper]}>
         <InputField
           placeholder="Email"
           label="Email"
           value="ali.molhem@gmail.com"
+          readOnly={true}
         />
         <Text style={[styles.computedLabel]}>App Language</Text>
         <RNPickerSelect

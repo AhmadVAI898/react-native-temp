@@ -15,7 +15,6 @@ import styles from "./styles";
 const NotificationButton = () => {
   // Hooks
   const [modalVisible, setModalVisible] = useState(false);
-
   return (
     <>
       <Modal
