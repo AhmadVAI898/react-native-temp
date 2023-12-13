@@ -14,11 +14,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#3B71F3",
   },
 
-  container_SECONDARY: {
-    borderColor: "#3B77",
-    backgroundColor: "#4444",
-
-    borderWidth: 2,
+  container_DANGER: {
+    backgroundColor: "#d74e51",
   },
   containerDisabled: {
     opacity: 0.7,
@@ -29,7 +26,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
 
-  text_SECONDARY: {
+  text_DANGER: {
     color: "white",
   },
 });

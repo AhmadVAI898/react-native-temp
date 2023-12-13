@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 // Core Components
 import { View, Text, ActivityIndicator } from "react-native";
@@ -11,12 +11,15 @@ import AuthRoute from "../../vendors/Components/AuthRoute";
 
 // Data
 import endPoints from "../../data/endPoints";
-import { DEFAULT_MAP_COORDINATES } from "../../data/constants";
+import { BIRD_EYE_VIEW } from "../../data/constants";
 
 // Styles
 import styles from "./styles";
 
 const HomePage = ({ navigation }) => {
+  // Refs
+  const map = useRef();
+
   // Queries
   const getNewAPI = useQuery({
     url: endPoints.maps.GET_MARKERS,
@@ -43,15 +46,17 @@ const HomePage = ({ navigation }) => {
     }
   };
 
-  const firstLocation = getNewAPI?.response?.data?.results?.[0];
-  const initialRegion = firstLocation
-    ? {
-        latitude: parseFloat(firstLocation?.latitude),
-        longitude: parseFloat(firstLocation?.longitude),
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }
-    : DEFAULT_MAP_COORDINATES;
+  const fitAllMarkers = () => {
+    map.current.fitToCoordinates(getNewAPI?.response?.data?.results, {
+      edgePadding: {
+        top: 20,
+        right: 100,
+        bottom: 10,
+        left: 100,
+      },
+      animated: true,
+    });
+  };
 
   return (
     <AuthRoute
@@ -74,11 +79,14 @@ const HomePage = ({ navigation }) => {
         ) : (
           // Display the map with markers
           <MapView
+            ref={map}
             style={styles.map}
             provider="google"
+            initialRegion={BIRD_EYE_VIEW}
             showsUserLocation={true}
             followsUserLocation={true}
-            initialRegion={initialRegion}
+            onMapReady={fitAllMarkers}
+            onMapLoaded={fitAllMarkers}
           >
             {getNewAPI?.response?.data?.results?.map((location) => {
               return (
@@ -89,6 +97,7 @@ const HomePage = ({ navigation }) => {
                     longitude: parseFloat(location?.longitude),
                   }}
                   title={location?.name}
+                  identifier={`id${location?.id}`}
                   description={location?.description}
                 >
                   {IconBasedOnCategory(location?.category)}

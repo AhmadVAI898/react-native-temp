@@ -1,5 +1,5 @@
 // Core components
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, Alert } from "react-native";
 
 // UO Components
 import { Button, InputField } from "../../components/ui";
@@ -33,12 +33,24 @@ const Profile = ({ navigation }) => {
       Toast.error("Something went wrong, Please try agin later.");
     },
   });
+
   // Functions
-  const handleLogout = () => {
-    logoutAPI.executeQuery();
+  const showConfirmDialog = () => {
+    return Alert.alert("Are your sure?", "Are you sure you want to Logout?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          logoutAPI.executeQuery();
+        },
+      },
+      // The "No" button do nothing but dismiss the alert box
+      {
+        text: "No",
+      },
+    ]);
   };
   return (
-    <View style={styles.container}>
+    <>
       <ToastManager textStyle={{ fontSize: 12 }} />
       <View style={styles.header}></View>
       <Image style={styles.avatar} source={profile} />
@@ -64,13 +76,15 @@ const Profile = ({ navigation }) => {
           ]}
         />
       </View>
-      <Button
-        text="Log out"
-        type="SECONDARY"
-        onPress={handleLogout}
-        isLoading={logoutAPI.isLoading}
-      />
-    </View>
+      <View style={styles.bottom}>
+        <Button
+          text="Log out"
+          type="DANGER"
+          onPress={showConfirmDialog}
+          isLoading={logoutAPI.isLoading}
+        />
+      </View>
+    </>
   );
 };
 export default Profile;

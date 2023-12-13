@@ -54,6 +54,11 @@ const styles = StyleSheet.create({
     color: "#666",
     marginBottom: 5,
   },
+  bottom: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+  },
 });
 const pickerStyle = {
   inputIOS: {
