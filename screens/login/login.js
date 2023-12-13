@@ -1,16 +1,17 @@
 // Core Components
 import {
   View,
-  Text,
   Image,
   KeyboardAvoidingView,
   ActivityIndicator,
 } from "react-native";
 
 // UI Components
-import InputField from "../../components/ui/InputField/InputField";
-import Button from "../../components/ui/Button/Button";
-import PasswordInputField from "../../components/ui/PasswordInputField/PasswordInputField";
+import {
+  InputField,
+  Button,
+  PasswordInputField,
+} from "../../components/ui/index";
 
 // Libraries
 import ToastManager, { Toast } from "toastify-react-native";
@@ -51,7 +52,7 @@ const Login = ({ onLayoutRootView }) => {
   });
 
   // Queries
-  const loginApi = useQuery({
+  const loginAPI = useQuery({
     url: endPoints.auth.LOGIN,
     method: "POST",
     executeImmediately: false,
@@ -73,9 +74,10 @@ const Login = ({ onLayoutRootView }) => {
       }
     },
   });
+
   // Functions
   const handleLogin = () => {
-    loginApi.executeQuery(form.getApiBody());
+    loginAPI.executeQuery(form.getApiBody());
   };
 
   return (
@@ -97,7 +99,6 @@ const Login = ({ onLayoutRootView }) => {
         style={styles.containerKeyboardAvoidingView}
       >
         <ToastManager textStyle={{ fontSize: 12 }} />
-
         <View style={styles.container} onLayout={onLayoutRootView}>
           <Image source={splash} style={{ width: 200, height: 200 }} />
           <InputField
@@ -115,7 +116,7 @@ const Login = ({ onLayoutRootView }) => {
             text="Sign In"
             onPress={handleLogin}
             disabled={!form.isValid()}
-            isLoading={loginApi.isLoading}
+            isLoading={loginAPI.isLoading}
           />
         </View>
       </KeyboardAvoidingView>

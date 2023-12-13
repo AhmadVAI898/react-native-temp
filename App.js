@@ -3,20 +3,14 @@ import React, { useCallback, useEffect, useState } from "react";
 // Core Components
 import { StatusBar } from "react-native";
 
-// Advanced Components
-import NotificationButton from "./components/advanced/NotificationButton/NotificationButton";
+// Advances Components
+import TabNavigator from "./components/advanced/tabNavigator/tabNavigator";
 
 // Screens
-import FirstStep from "./screens/firstStep/firstStep";
-import HomePage from "./screens/homePage/homePage";
-import News from "./screens/news/news";
-import QrCodeReader from "./screens/qrCodeReader/qrCodeReader";
-import Login from "./screens/login/login";
-import Profile from "./screens/profile/profile";
+import { FirstStep, Login } from "./screens/index";
 
 // Libraries
 import * as SplashScreen from "expo-splash-screen";
-import { Ionicons } from "@expo/vector-icons";
 import { ApiProvider } from "@hybris-software/use-query";
 import { generateApiClient } from "./Api/client";
 import AuthProvider from "./vendors/Components/AuthProvider";
@@ -24,7 +18,6 @@ import AuthProvider from "./vendors/Components/AuthProvider";
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Data
 import config from "./data/config";
@@ -32,7 +25,6 @@ import NewsPost from "./screens/newsPost/newsPost";
 
 // Initialize the Navigation Stack
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -97,57 +89,6 @@ export default function App() {
   // Default options for the Stack Navigator
   const screenOptions = {
     headerShown: false,
-  };
-
-  const TabNavigator = () => {
-    return (
-      <>
-        <NotificationButton />
-        <Tab.Navigator screenOptions={screenOptions}>
-          <Tab.Screen
-            name="Home"
-            component={HomePage}
-            unmountOnBlur={true}
-            options={{
-              tabBarIcon: ({ color, size }) => {
-                return <Ionicons name="home" color={color} size={size} />;
-              },
-            }}
-          />
-          <Tab.Screen
-            name="News"
-            component={News}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="newspaper" color={color} size={size} />
-              ),
-              unmountOnBlur: true, // Add the unmountOnBlur this tab to avoid keeping the camera working
-            }}
-          />
-          <Tab.Screen
-            name="Qr Reader"
-            component={QrCodeReader}
-            unmountOnBlur={true}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="qr-code" color={color} size={size} />
-              ),
-              unmountOnBlur: true,
-            }}
-          />
-          <Tab.Screen
-            name="Profile"
-            component={Profile}
-            unmountOnBlur={true}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="person-outline" color={color} size={size} />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      </>
-    );
   };
 
   return (

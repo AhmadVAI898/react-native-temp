@@ -1,7 +1,7 @@
 import React from "react";
 
 // Core Components
-import { View, Text, Image, Button, StyleSheet } from "react-native";
+import { View, Text, Image, Button } from "react-native";
 
 // Styles
 import styles from "./styles";

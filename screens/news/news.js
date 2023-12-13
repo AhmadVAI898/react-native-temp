@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { View, FlatList, ActivityIndicator, Text } from "react-native";
 
 // UI Components
-import NewsCard from "../../components/ui/newsCard/newsCard";
+import { NewsCard } from "../../components/ui";
 
 // Libraries
 import useQuery from "@hybris-software/use-query";

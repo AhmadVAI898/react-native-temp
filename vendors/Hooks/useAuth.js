@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 // Hooks
 import useQuery from "@hybris-software/use-query/dist/Hooks/useQuery";
+
+// Libraries
+import * as SecureStore from "expo-secure-store";
 
 const useAuth = ({
   url,
@@ -22,7 +25,7 @@ const useAuth = ({
         onSuccess(response);
       },
       onUnauthorized: (error) => {
-        localStorage.removeItem("token");
+        SecureStore.deleteItemAsync("token");
         setIsLogged(false);
         onUnauthorized(error);
       },
