@@ -82,7 +82,6 @@ const Login = ({ onLayoutRootView }) => {
 
   return (
     <AuthRoute
-      minimumLoadingTime={100}
       loader={
         <View style={styles.loader}>
           <ActivityIndicator size="large" color="#aaa" />

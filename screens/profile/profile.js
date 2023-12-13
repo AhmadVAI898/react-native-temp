@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 // Core components
 import { Text, View, Image, Alert } from "react-native";
 
@@ -20,14 +22,16 @@ import profile from "../../assets/profile.png";
 import { styles, pickerStyle } from "./styles";
 
 const Profile = ({ navigation }) => {
+  // States
+  const [selectedLanguage, setSelectedLanguage] = useState("EN");
+
   // Queries
   const logoutAPI = useQuery({
     url: endPoints.auth.LOGOUT,
     method: "POST",
     executeImmediately: false,
     onSuccess: (response) => {
-      SecureStore.deleteItemAsync("token");
-      navigation.navigate("Login");
+      SecureStore.deleteItemAsync("token").then(navigation.navigate("Login"));
     },
     onError: (error) => {
       Toast.error("Something went wrong, Please try agin later.");
@@ -67,8 +71,9 @@ const Profile = ({ navigation }) => {
         />
         <Text style={[styles.computedLabel]}>App Language</Text>
         <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
+          onValueChange={(value) => setSelectedLanguage(value)}
           style={pickerStyle}
+          value={selectedLanguage}
           items={[
             { label: "English", value: "EN" },
             { label: "French", value: "FR" },

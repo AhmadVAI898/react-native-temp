@@ -24,6 +24,7 @@ export function generateApiClient({
       try {
         config.headers = config.headers || {};
         const token = await SecureStore.getItemAsync(tokenKey);
+        console.log("token", token);
 
         if (token) {
           config.headers[
