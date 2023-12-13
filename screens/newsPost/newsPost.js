@@ -1,5 +1,3 @@
-import React from "react";
-
 // Core Components
 import { View, Text, Image, ScrollView } from "react-native";
 

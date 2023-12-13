@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 // Core Components
 import { View, Text, ActivityIndicator } from "react-native";
@@ -24,10 +24,6 @@ const HomePage = ({ navigation }) => {
   const getNewAPI = useQuery({
     url: endPoints.maps.GET_MARKERS,
     executeImmediately: true,
-    onSuccess: (response) => {},
-    onError: (error) => {
-      console.log("error", error);
-    },
   });
 
   // Functions
@@ -77,7 +73,6 @@ const HomePage = ({ navigation }) => {
         ) : getNewAPI?.isLoading ? (
           <Text>Loading</Text>
         ) : (
-          // Display the map with markers
           <MapView
             ref={map}
             style={styles.map}

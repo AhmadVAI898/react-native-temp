@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // Core Components
 import { Text, View, StyleSheet, Button } from "react-native";
@@ -10,6 +10,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import styles from "./styles";
 
 const QrCodeReader = () => {
+  // States
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
