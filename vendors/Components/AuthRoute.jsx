@@ -14,9 +14,13 @@ const AuthRoute = ({
   loader = <></>,
   apiLoading = false,
   firstApiLoading = false,
+  isFocused = true,
 }) => {
   const authUrl = useContext(AuthProviderContext);
-  const { isLogged, isLoading } = useAuth({ url: authUrl });
+  const { isLogged, isLoading } = useAuth({
+    url: authUrl,
+    isFocused: isFocused,
+  });
   const [loading, setLoading] = useState(true);
   const [firstLoading, setFirstLoading] = useState(true);
 

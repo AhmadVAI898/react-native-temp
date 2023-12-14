@@ -13,6 +13,7 @@ const useAuth = ({
   onSuccess = () => {},
   onUnauthorized = () => {},
   onError = () => {},
+  isFocused = null,
 }) => {
   const [isLogged, setIsLogged] = useState(undefined);
   const { isLoading, isError, isSuccess, data, error, executeQuery } = useQuery(
@@ -37,10 +38,10 @@ const useAuth = ({
   );
 
   useEffect(() => {
-    if (executeImmediately) {
+    if (executeImmediately && isFocused) {
       executeQuery();
     }
-  }, []);
+  }, [isFocused]);
 
   return {
     isLogged: isLogged,

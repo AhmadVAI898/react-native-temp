@@ -18,13 +18,13 @@ import ToastManager, { Toast } from "toastify-react-native";
 import useQuery from "@hybris-software/use-query";
 import useForm from "@hybris-software/use-ful-form";
 import * as SecureStore from "expo-secure-store";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AuthRoute from "../../vendors/Components/AuthRoute";
 
 // Images
 import splash from "../../assets/splash.png";
 
-// Data
+// Constants
 import endPoints from "../../data/endPoints";
 
 // Styles
@@ -33,10 +33,14 @@ import styles from "./styles";
 const Login = ({ onLayoutRootView }) => {
   // Hooks
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   // Form
   const form = useForm({
     inputs: {
       username: {
+        formatter: (value) => {
+          return value?.toLowerCase();
+        },
         validator: (value) => {
           if (!value || value === "") return [false, "This field is required"];
           return [true, ""];
@@ -63,7 +67,7 @@ const Login = ({ onLayoutRootView }) => {
     onError: (error) => {
       console.log(error);
       if (error?.response?.status === 422) {
-        form.fetchQueryErrors(error.response.data);
+        form.fetchQueryErrors(error?.response?.data);
       } else {
         if (error?.response?.data?.message) {
           Toast.error(error?.response?.data?.message);
@@ -87,6 +91,7 @@ const Login = ({ onLayoutRootView }) => {
         </View>
       }
       forLoggedUser={false}
+      isFocused={isFocused}
       action={() => {
         navigation.navigate("HomeTab");
       }}
