@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 // Core Components
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
 // Libraries
 import MapView, { Marker } from "react-native-maps";
