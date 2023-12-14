@@ -12,7 +12,7 @@ import * as SecureStore from "expo-secure-store";
 import useQuery from "@hybris-software/use-query";
 import ToastManager, { Toast } from "toastify-react-native";
 
-// Data
+// Constants
 import endPoints from "../../data/endPoints";
 
 // Assets

@@ -7,7 +7,7 @@ import { StatusBar } from "react-native";
 import TabNavigator from "./components/advanced/tabNavigator/tabNavigator";
 
 // Screens
-import { FirstStep, Login } from "./screens/index";
+import { FirstStep, Login, NewsPost } from "./screens/index";
 
 // Libraries
 import * as SplashScreen from "expo-splash-screen";
@@ -21,7 +21,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Data
 import config from "./data/config";
-import NewsPost from "./screens/newsPost/newsPost";
 
 // Initialize the Navigation Stack
 const Stack = createNativeStackNavigator();
