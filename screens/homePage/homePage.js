@@ -8,8 +8,9 @@ import MapView, { Marker } from "react-native-maps";
 import useQuery from "@hybris-software/use-query";
 import { Ionicons } from "@expo/vector-icons";
 import AuthRoute from "../../vendors/Components/AuthRoute";
+import ToastManager, { Toast } from "toastify-react-native";
 
-// Data
+// Constants
 import endPoints from "../../data/endPoints";
 import { BIRD_EYE_VIEW } from "../../data/constants";
 
@@ -24,6 +25,9 @@ const HomePage = ({ navigation }) => {
   const getNewAPI = useQuery({
     url: endPoints.maps.GET_MARKERS,
     executeImmediately: true,
+    onError: (error) => {
+      Toast.error("Something went wrong, Please try agin later. ");
+    },
   });
 
   // Functions
@@ -63,15 +67,16 @@ const HomePage = ({ navigation }) => {
         </View>
       }
       forLoggedUser={true}
+      firstApiLoading={getNewAPI?.isLoading}
       action={() => {
         navigation.navigate("Login");
       }}
     >
       <View style={styles.container}>
+        <ToastManager textStyle={{ fontSize: 12 }} />
+
         {getNewAPI.isError ? (
-          <Text>Error</Text>
-        ) : getNewAPI?.isLoading ? (
-          <Text>Loading</Text>
+          <></>
         ) : (
           <MapView
             ref={map}
@@ -81,7 +86,6 @@ const HomePage = ({ navigation }) => {
             showsUserLocation={true}
             followsUserLocation={true}
             onMapReady={fitAllMarkers}
-            onMapLoaded={fitAllMarkers}
           >
             {getNewAPI?.response?.data?.results?.map((location) => {
               return (

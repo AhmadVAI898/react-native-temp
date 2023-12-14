@@ -68,7 +68,6 @@ const Login = ({ onLayoutRootView }) => {
         if (error?.response?.data?.message) {
           Toast.error(error?.response?.data?.message);
         } else {
-          console.log(error);
           Toast.error("Something went wrong, Please try agin later. ");
         }
       }
