@@ -1,7 +1,8 @@
 import useAuth from "./Hooks/useAuth";
 import AuthProvider from "./Components/AuthProvider";
 import AuthRoute from "./Components/AuthRoute";
+import useUser from "./Hooks/useUser";
 
 export default useAuth;
 
-export { AuthProvider, AuthRoute };
+export { AuthProvider, AuthRoute, useUser };

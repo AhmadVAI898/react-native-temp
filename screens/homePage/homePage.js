@@ -13,7 +13,7 @@ import ToastManager, { Toast } from "toastify-react-native";
 // Constants
 import endPoints from "../../data/endPoints";
 import { BIRD_EYE_VIEW } from "../../data/constants";
-
+import { useUser } from "../../vendors/index";
 // Styles
 import styles from "./styles";
 
@@ -57,7 +57,8 @@ const HomePage = ({ navigation }) => {
       animated: true,
     });
   };
-
+  const { userInfo } = useUser();
+  console.log("userInfo", userInfo);
   return (
     <AuthRoute
       minimumLoadingTime={100}

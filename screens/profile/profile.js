@@ -7,6 +7,8 @@ import { Text, View, Image, Alert } from "react-native";
 import { Button, InputField } from "../../components/ui";
 
 // Libraries
+import useUser from "./../../vendors/Hooks/useUser";
+
 import RNPickerSelect from "react-native-picker-select";
 import * as SecureStore from "expo-secure-store";
 import useQuery from "@hybris-software/use-query";
@@ -24,6 +26,9 @@ import { styles, pickerStyle } from "./styles";
 const Profile = ({ navigation }) => {
   // States
   const [selectedLanguage, setSelectedLanguage] = useState("EN");
+
+  // Hooks
+  const { userInfo } = useUser();
 
   // Queries
   const logoutAPI = useQuery({
@@ -59,14 +64,16 @@ const Profile = ({ navigation }) => {
       <View style={styles.header}></View>
       <Image style={styles.avatar} source={profile} />
       <View style={styles.body}>
-        <Text style={styles.name}>ALi Molhem</Text>
-        <Text style={styles.info}>@ali.molhem</Text>
+        <Text style={styles.name}>
+          {userInfo?.firstName} {userInfo?.lastName}
+        </Text>
+        <Text style={styles.info}>@{userInfo?.username}</Text>
       </View>
       <View style={[styles.wrapper]}>
         <InputField
           placeholder="Email"
           label="Email"
-          value="ali.molhem@gmail.com"
+          value={userInfo?.email}
           readOnly={true}
         />
         <Text style={[styles.computedLabel]}>App Language</Text>
@@ -86,7 +93,7 @@ const Profile = ({ navigation }) => {
           text="Log out"
           type="DANGER"
           onPress={showConfirmDialog}
-          isLoading={logoutAPI.isLoading}
+          isLoading={logoutAPI?.isLoading}
         />
       </View>
     </>

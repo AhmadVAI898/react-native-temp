@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // Hooks
 import useQuery from "@hybris-software/use-query/dist/Hooks/useQuery";
 
 // Libraries
 import * as SecureStore from "expo-secure-store";
+// Contexts
+import UserInfoContext from "../Context/UserInfoContext";
 
 const useAuth = ({
   url,
@@ -15,6 +17,8 @@ const useAuth = ({
   onError = () => {},
   isFocused = null,
 }) => {
+  const { setUserInfo } = useContext(UserInfoContext);
+
   const [isLogged, setIsLogged] = useState(undefined);
   const { isLoading, isError, isSuccess, data, error, executeQuery } = useQuery(
     {
@@ -24,6 +28,7 @@ const useAuth = ({
       onSuccess: (response) => {
         setIsLogged(true);
         onSuccess(response);
+        setUserInfo(response.data);
       },
       onUnauthorized: (error) => {
         SecureStore.deleteItemAsync("token");
