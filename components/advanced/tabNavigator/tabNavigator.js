@@ -12,9 +12,11 @@ import { Profile, HomePage, News, QrCodeReader } from "../../../screens/index";
 // Libraries
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import useQuery from "@hybris-software/use-query";
 
 // Styles
 import styles from "./styles";
+import endPoints from "../../../data/endPoints";
 
 // Initialize the Navigation Stack
 const Tab = createBottomTabNavigator();
@@ -78,6 +80,16 @@ const TabNavigator = () => {
 const NotificationButton = () => {
   // Hooks
   const [modalVisible, setModalVisible] = useState(false);
+
+  // Queries
+  const getNotificationAPI = useQuery({
+    url: endPoints.notifications.GET_NOTIFICATIONS,
+    executeImmediately: true,
+    onError: (error) => {
+      Toast.error("Something went wrong, Please try agin later.");
+    },
+  });
+
   return (
     <>
       <Modal
@@ -90,6 +102,7 @@ const NotificationButton = () => {
         <Notifications
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          API={getNotificationAPI}
         />
       </Modal>
       <Pressable style={styles.container} onPress={() => setModalVisible(true)}>

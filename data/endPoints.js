@@ -10,6 +10,9 @@ const endPoints = {
   maps: {
     GET_MARKERS: `maps/`,
   },
+  notifications: {
+    GET_NOTIFICATIONS: `notifications/`,
+  },
 };
 
 export default endPoints;
