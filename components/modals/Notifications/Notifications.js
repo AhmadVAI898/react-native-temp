@@ -61,12 +61,12 @@ const Notifications = ({ API, modalVisible, setModalVisible }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (notificationId) {
-      setModalVisible(!modalVisible);
+    if (notificationId && modalVisible) {
+      setModalVisible(false);
       navigation.navigate("Home");
       markAsReadAPI?.executeQuery();
     }
-  }, [notificationId]);
+  }, [notificationId, modalVisible]);
 
   return (
     <>
@@ -129,7 +129,9 @@ const Notifications = ({ API, modalVisible, setModalVisible }) => {
                     ]}
                     key={item.id}
                     onPress={() => {
-                      setNotificationID(item?.id);
+                      if (!item.isRead) {
+                        setNotificationID(item?.id);
+                      }
                     }}
                   >
                     <Image

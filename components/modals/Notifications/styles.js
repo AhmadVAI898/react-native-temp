@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#FFFFFF",
   },
-
   notificationBox: {
     padding: 20,
     marginTop: 5,
@@ -87,7 +86,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-
   icon: {
     width: 45,
     height: 45,
