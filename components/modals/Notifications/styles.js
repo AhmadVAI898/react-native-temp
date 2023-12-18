@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   categories: {
-    marginBottom: 0,
+    marginBottom: 10,
     paddingHorizontal: 10,
     maxHeight: 30,
   },

@@ -58,7 +58,6 @@ const HomePage = ({ navigation }) => {
     });
   };
   const { userInfo } = useUser();
-  console.log("userInfo", userInfo);
   return (
     <AuthRoute
       minimumLoadingTime={100}

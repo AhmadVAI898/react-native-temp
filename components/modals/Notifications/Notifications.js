@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Core components
 import {
@@ -11,9 +11,16 @@ import {
   ScrollView,
 } from "react-native";
 
+// Libraries
+import useQuery from "@hybris-software/use-query";
+import { useNavigation } from "@react-navigation/native";
+
 // Assets
 import { Ionicons } from "@expo/vector-icons";
 import blank from "../../../assets/notifications-blank.jpg";
+
+// Constants
+import endPoints from "../../../data/endPoints";
 
 // Styles
 import styles from "./styles";
@@ -35,8 +42,32 @@ const Notifications = ({ API, modalVisible, setModalVisible }) => {
 
   // States
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [notificationId, setNotificationID] = useState(null);
 
-  console.log(categories);
+  // Queries
+  const markAsReadAPI = useQuery({
+    url: endPoints.notifications.MARK_AS_READ(notificationId),
+    method: "GET",
+    executeImmediately: false,
+    onSuccess: (response) => {
+      console.log(response, "Marked as read");
+    },
+    onError: (error) => {
+      console.log(error, "error");
+    },
+  });
+
+  // Hooks
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (notificationId) {
+      setModalVisible(!modalVisible);
+      navigation.navigate("Home");
+      markAsReadAPI?.executeQuery();
+    }
+  }, [notificationId]);
+
   return (
     <>
       <Pressable
@@ -51,7 +82,7 @@ const Notifications = ({ API, modalVisible, setModalVisible }) => {
             <ScrollView horizontal={true} style={styles.categories}>
               {categories?.map((item) => (
                 <TouchableOpacity
-                  key={item.id}
+                  key={item.key}
                   style={[
                     styles.categoryTab,
                     selectedCategory === item?.value &&
@@ -88,9 +119,19 @@ const Notifications = ({ API, modalVisible, setModalVisible }) => {
                 const isLastItem =
                   index === (API?.response?.data?.length || 0) - 1;
                 const marginBottom = isLastItem ? 20 : 5;
+                const backgroundColor = item.isRead ? "#FFFFFF" : "#F2F2E2";
 
                 return (
-                  <View style={[styles.notificationBox, { marginBottom }]}>
+                  <Pressable
+                    style={[
+                      styles.notificationBox,
+                      { marginBottom, backgroundColor },
+                    ]}
+                    key={item.id}
+                    onPress={() => {
+                      setNotificationID(item?.id);
+                    }}
+                  >
                     <Image
                       style={styles.icon}
                       source={{
@@ -104,7 +145,7 @@ const Notifications = ({ API, modalVisible, setModalVisible }) => {
                     >
                       {item.description}
                     </Text>
-                  </View>
+                  </Pressable>
                 );
               }}
             />

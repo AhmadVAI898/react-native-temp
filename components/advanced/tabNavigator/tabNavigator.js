@@ -105,7 +105,13 @@ const NotificationButton = () => {
           API={getNotificationAPI}
         />
       </Modal>
-      <Pressable style={styles.container} onPress={() => setModalVisible(true)}>
+      <Pressable
+        style={styles.container}
+        onPress={() => {
+          setModalVisible(true);
+          getNotificationAPI.executeQuery();
+        }}
+      >
         <Ionicons name="notifications-outline" size={30} color={"#8E8E8F"} />
       </Pressable>
     </>

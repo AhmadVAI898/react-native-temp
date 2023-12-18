@@ -12,6 +12,7 @@ const endPoints = {
   },
   notifications: {
     GET_NOTIFICATIONS: `notifications/`,
+    MARK_AS_READ: (id) => `notifications/mark-as-read/${id}/`,
   },
 };
 
